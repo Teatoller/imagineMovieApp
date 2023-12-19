@@ -1,11 +1,13 @@
 import './App.css'
+import { MovieDetails } from './view/movie/MovieDetails'
 
 function App() {
 
   return (
     <>
       <div>
-       <h1>Imagine Movie App</h1>
+       <h3>Imagine Movie App</h3>
+       <MovieDetails />
       </div>
     </>
   )
