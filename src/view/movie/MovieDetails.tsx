@@ -6,17 +6,40 @@ interface Movie {
   Year: string;
   Plot: string;
   Poster: string;
+  imdbID: string;
+  Type: string;
 }
 
 export const MovieDetails = () => {
   const [searchText, setSearchText] = useState<string>("");
-  const [movie, setMovie] = useState<Movie | null>(null);
+  const [movies, setMovies] = useState<Movie[]>([]);
   const apiUrl = "https://www.omdbapi.com/";
   const apiKey = "bd3b24c3";
+  const defaultMovieId = 'tt3896198';
+
+  const fetchDefaultMovie = async () => {
+    try {
+      const response = await axios.get(apiUrl, {
+        params: {
+          apikey: apiKey,
+          i: defaultMovieId,
+        },
+      });
+
+      setMovies([response.data]);
+    } catch (error) {
+      console.error('Error fetching default movie:', error);
+    }
+  };
+
+  useEffect(() => {
+    // Fetch the default movie when the component mounts
+    fetchDefaultMovie(); 
+  }, []);
 
   useEffect(() => {
     if (!searchText) {
-      // Don't make a request if the search term is empty
+        fetchDefaultMovie()
       return;
     }
 
@@ -25,10 +48,10 @@ export const MovieDetails = () => {
         const response = await axios.get(apiUrl, {
           params: {
             apikey: apiKey,
-            t: searchText,
+            s: searchText,
           },
         });
-        setMovie(response.data);
+        setMovies(response.data.Search || []);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -50,18 +73,19 @@ export const MovieDetails = () => {
           <input type="text" value={searchText} onChange={handleSearchChange} />
         </label>
       </div>
-      {movie ? (
+      {movies.length > 0 ? (
         <div>
-          <h2>{movie.Title}</h2>
-          <p>Year: {movie.Year}</p>
-          <p>Plot: {movie.Plot}</p>
-          <img src={movie.Poster} alt={`${movie.Title} Poster`} />
+          {movies.map((movie) => (
+            <div key={movie.imdbID}>
+              <h2>{movie.Title}</h2>
+              <p>Year: {movie.Year}</p>
+              <p>Type: {movie.Type}</p>
+              <img src={movie.Poster} alt={`${movie.Title} Poster`} />
+            </div>
+          ))}
         </div>
       ) : (
-        // <p>Loading...</p>
-        <p>
-          {searchText ? "Movie not found" : "Enter a movie title to search"}
-        </p>
+        <p>{searchText ? 'No movies found' : 'Enter a movie title to search'}</p>
       )}
     </div>
   );
