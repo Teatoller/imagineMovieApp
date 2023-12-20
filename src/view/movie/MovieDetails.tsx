@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import "./MovieDetails.css";
 
 interface Movie {
   Title: string;
@@ -8,6 +9,30 @@ interface Movie {
   Poster: string;
   imdbID: string;
   Type: string;
+  Rated: string;
+  Released: string;
+  Runtime: string;
+  Genre: string;
+  Director: string;
+  Writer: string;
+  Actors: string;
+  Language: string;
+  Country: string;
+  Awards: string;
+  Ratings: Rating[];
+  Metascore: string;
+  imdbRating: string;
+  imdbVotes: string;
+  DVD: string;
+  BoxOffice: string;
+  Production: string;
+  Website: string;
+  Response: string;
+}
+
+interface Rating {
+  Source: string;
+  Value: string;
 }
 
 export const MovieDetails = () => {
@@ -15,7 +40,7 @@ export const MovieDetails = () => {
   const [movies, setMovies] = useState<Movie[]>([]);
   const apiUrl = "https://www.omdbapi.com/";
   const apiKey = "bd3b24c3";
-  const defaultMovieId = 'tt3896198';
+  const defaultMovieId = "tt3896198";
 
   const fetchDefaultMovie = async () => {
     try {
@@ -28,18 +53,17 @@ export const MovieDetails = () => {
 
       setMovies([response.data]);
     } catch (error) {
-      console.error('Error fetching default movie:', error);
+      console.error("Error fetching default movie:", error);
     }
   };
 
   useEffect(() => {
-    // Fetch the default movie when the component mounts
-    fetchDefaultMovie(); 
+    fetchDefaultMovie();
   }, []);
 
   useEffect(() => {
     if (!searchText) {
-        fetchDefaultMovie()
+      fetchDefaultMovie();
       return;
     }
 
@@ -65,27 +89,41 @@ export const MovieDetails = () => {
   };
   return (
     <div>
-      <h3>MovieDetails</h3>
-
       <div>
         <label>
           Search Movie:
-          <input type="text" value={searchText} onChange={handleSearchChange} />
+          <input
+            className="search-input search-input-large"
+            type="text"
+            value={searchText}
+            onChange={handleSearchChange}
+          />
         </label>
       </div>
       {movies.length > 0 ? (
-        <div>
+        <>
           {movies.map((movie) => (
-            <div key={movie.imdbID}>
-              <h2>{movie.Title}</h2>
-              <p>Year: {movie.Year}</p>
-              <p>Type: {movie.Type}</p>
-              <img src={movie.Poster} alt={`${movie.Title} Poster`} />
+            <div className="movie-detail" key={movie.imdbID}>
+              <div>
+                <img src={movie.Poster} alt={`${movie.Title} Poster`} />{" "}
+                <p>Year: {movie.Year}</p>
+                <p>
+                  <span>{movie.Rated}</span> {movie.Genre}
+                </p>
+                <p>Plot: {movie?.Plot}</p>
+              </div>
+
+              <div>
+                <h3>MovieDetails</h3>
+                <p>Cast: {movie.Actors}</p>
+              </div>
             </div>
           ))}
-        </div>
+        </>
       ) : (
-        <p>{searchText ? 'No movies found' : 'Enter a movie title to search'}</p>
+        <p>
+          {searchText ? "No movies found" : "Enter a movie title to search"}
+        </p>
       )}
     </div>
   );
