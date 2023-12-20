@@ -8,12 +8,6 @@ body {
   color: black;
 }
 
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-}
-
 /* Common styles for all screen sizes */
 h3 {
   text-align: center;
