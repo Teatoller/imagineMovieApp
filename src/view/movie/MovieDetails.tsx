@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./MovieDetails.css";
+import { Header } from "../header/Header";
 
 interface Movie {
   Title: string;
@@ -89,17 +90,7 @@ export const MovieDetails = () => {
   };
   return (
     <div>
-      <div>
-        <label>
-          Search Movie:
-          <input
-            className="search-input search-input-large"
-            type="text"
-            value={searchText}
-            onChange={handleSearchChange}
-          />
-        </label>
-      </div>
+       <Header searchText={searchText} handleSearchChange={handleSearchChange} />
       {movies.length > 0 ? (
         <>
           {movies.map((movie) => (

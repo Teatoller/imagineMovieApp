@@ -2,57 +2,115 @@
 
 /* Common styles for all screen sizes */
 h3 {
-    text-align: center;
+  text-align: center;
+}
+
+label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.top-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background-color: #242424;
+    color: white;
   }
   
-  label {
-    display: block;
-    margin-bottom: 10px;
+  .logo {
+    font-size: 1.5em;
   }
-
+  
+  .search-bar {
+    display: flex;
+    align-items: center;
+    width: 280px
+  }
+  
+  .search-input-container {
+    position: relative;
+    flex: 1;
+  }
+  
   .search-input {
     width: 100%;
     padding: 8px;
     box-sizing: border-box;
-    margin-bottom: 20px;
+    border: none;
+    border-radius: 4px;
+    background: #ddd;
+    margin-left: 0.5rem;
   }
   
-  input {
-    width: 100%;
-    padding: 8px;
-    box-sizing: border-box;
-    margin-bottom: 20px;
-  }
+.search-input:focus {
+  outline: 1;
+  background: white;
+}
 
-  .movie-detail{
-    display: flex;
-    justify-content: space-evenly;
-    width:100%;
+input {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+}
+
+.movie-detail {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
 }
 .movie-detail > div {
-    flex: 1;
-    padding: 10px;
-  }
-  
-  /* Styles for large screens (e.g., desktops) */
-  @media only screen and (min-width: 768px) {
-    .movie-detail {
-        max-width: 800px;
-        margin: 0 auto;
-        flex-direction: row;
-      }
+  flex: 1;
+  padding: 10px;
+}
 
-      .search-input-large {
-        width: 50%;
-        margin: 0 auto;
-      }
+/* Styles for large screens (e.g., desktops) */
+@media only screen and (min-width: 768px) {
+  .movie-detail {
+    max-width: 800px;
+    margin: 0 auto;
+    flex-direction: row;
   }
-  
-  /* Styles for small screens (e.g., mobile devices) */
-  @media only screen and (max-width: 767px) {
-    .movie-detail{
-        flex-direction: column;
-        align-items: center;
-    }
+
+  .search-input-large {
+    width: 100%;
+    margin: 0 auto;
   }
-  
+}
+
+/* Styles for small screens (e.g., mobile devices) */
+@media only screen and (max-width: 767px) {
+  .movie-detail {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .top-nav {
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 1rem;
+  }
+
+  .logo,
+  .app-name {
+    margin-bottom: 0.5rem;
+  }
+
+  .search-bar {
+    width: 100%;
+    margin-bottom: 1rem;
+    /* width: 280px */
+  }
+
+  .search-input-container {
+    width: 100%;
+    margin-right: 0;
+  }
+
+  .search-input {
+    margin-left: 0;
+    padding-left: 12px;
+  }
+}
